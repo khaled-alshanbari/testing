@@ -32,7 +32,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-loaded=pickle.load(open("model2.sav", "rb"))
+loaded=pickle.load(open("model.sav", "rb"))
 loaded2=pickle.load(open("tfidf.sav", "rb"))
 
 def click(x,counter):
