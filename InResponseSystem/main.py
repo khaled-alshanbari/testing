@@ -49,7 +49,10 @@ def run_alert():
     # Display the alert message
     #display_alert()
 
-
+    
+    
+    
+    
 def cleanEmails(emails):
     emails = re.sub('http\S+\s*', ' ', emails)  # remove URLs
     emails = re.sub('RT|cc', ' ', emails)  # remove RT and cc
