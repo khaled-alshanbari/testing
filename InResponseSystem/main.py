@@ -3,7 +3,7 @@ import streamlit as st
 
 st.set_page_config(
     page_title="In-Response",
-    page_icon="🖥️",
+    page_icon="ð¥️",
     layout="wide",
     initial_sidebar_state="expanded",
 )  
@@ -32,17 +32,17 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-loaded=pickle.load(open("/app/testing/InResponseSystem/model.sav", "rb"))
-loaded2=pickle.load(open("/app/testing/InResponseSystem/tfidf.sav", "rb"))
+loaded=pickle.load(open("model2.sav", "rb"))
+loaded2=pickle.load(open("tfidf.sav", "rb"))
 
 def click(x,counter):
                 c = sqlcon.create_conn()
                 cursor7 = c.cursor()
                 cursor7.execute('UPDATE tickets SET v'+str(counter-1)+' = 1 WHERE ticketid = '+str(x)+';')
                 c.commit()  
-# def display_alert():
-#     # Show the alert message
-#     messagebox.showwarning("In-Response", "New Incident Detected!", Parent=None)
+#def display_alert():
+    # Show the alert message
+    #messagebox.showwarning("In-Response", "New Incident Detected!", Parent=None)
 
 def run_alert():
 
@@ -50,10 +50,7 @@ def run_alert():
     #display_alert()
     pass
 
-    
-    
-    
-    
+
 def cleanEmails(emails):
     emails = re.sub('http\S+\s*', ' ', emails)  # remove URLs
     emails = re.sub('RT|cc', ' ', emails)  # remove RT and cc
@@ -82,12 +79,14 @@ class Handler_Class(object):
 
         
                     c = sqlcon.create_conn()
-                    if c.is_connected():  
-                        sqlQ = "INSERT INTO `tickets`(`classid`,`Flag`,`start_time`,`end_time` ) VALUES (%s,%s,%s)" 
-                        values = ("1","1", "1", "3")
-                        cursor = c.cursor()
-                        cursor.execute(sqlQ, values)
-                        c.commit()
+                    if c.is_connected():
+                      
+                      sqlQ = "INSERT INTO `tickets`(`classid`,`Flag`,`start_time`,`end_time` ) VALUES (%s,%s,%s)" 
+                      values = ("1","1", "1", "3")
+                      cursor = c.cursor()
+                      cursor.execute(sqlQ, values)
+                      c.commit()
+                    c.close()
 
                 if prediction == [2]:
                     alert_process = mp.Process(target=run_alert)
@@ -102,7 +101,7 @@ class Handler_Class(object):
                       cursor = c.cursor()
                       cursor.execute(sqlQ, values)
                       c.commit()
-     
+                    c.close()
 
                 if prediction == [3]:
                     alert_process = mp.Process(target=run_alert)
@@ -117,7 +116,7 @@ class Handler_Class(object):
                       cursor = c.cursor()
                       cursor.execute(sqlQ, values)
                       c.commit() 
-
+                    c.close()
         except Exception as e:
             print("Error: ", e)              
 
@@ -129,11 +128,13 @@ class Handler_Class(object):
 global c
 
 def main():
-
+    c= sqlcon.create_conn()
+    sqlcon.call_users(c)
     usernames = sqlcon.usernames
     names = sqlcon.names
     passwords = sqlcon.passwords
     hashed_passwords = stauth.Hasher(passwords).generate()
+    c.close()
 
 
     credentials = {"usernames":{}}
@@ -261,7 +262,7 @@ def main():
                  cursor7.execute('UPDATE tickets SET end_time = '+datetime.now()+' AND flag = 2 WHERE ticketid = '+str(x)+';')
                  c.commit()
                  st.success(f"Ticket #{Ticket_Number} Closed")
-
+        c.close()
 
 
 
@@ -291,7 +292,7 @@ def main():
               if st.button("Ticket: "+str(x)) :
                  render_tickets_page(x)
             #  sqlcon.create_conn.cursor.close()
-            #  c.close() 
+             c.close() 
                    
                     
         
@@ -302,12 +303,12 @@ def main():
             st.subheader("Browse Closed Tickets")
             c = sqlcon.create_conn()
             if c.is_connected():
-             cursor = c.cursor()
-             cursor.execute('SELECT COUNT(ticketId) FROM tickets WHERE flag = 2;')
-             E=cursor.fetchone()[0]
-             for x in range(E):
-                 st.button("ticket"+str(x), key=x)
-
+              cursor = c.cursor()
+              cursor.execute('SELECT COUNT(ticketId) FROM tickets WHERE flag = 2;')
+              E=cursor.fetchone()[0]
+              for x in range(E):
+                  st.button("ticket"+str(x), key=x)
+              c.close()
         elif adminMenu == "Users Profiles":
             st.subheader("Profiles:")
             fetchUsers = []
@@ -316,7 +317,7 @@ def main():
                 cursor = c.cursor()
                 cursor.execute('SELECT id, username , name, email FROM users;')
                 fetchUsers = cursor.fetchall()
-            
+                c.close()
             # Displaying data using Streamlit table
             df = pd.DataFrame(fetchUsers,columns=('ID','Username','Name','Email'))
             # CSS to inject contained in a string
@@ -354,6 +355,7 @@ def main():
 
                     cursor.execute(sqlQ, values)
                     c.commit()
+                    c.close()
                 # Show a success message
                 st.success(f"Added user: {new_name} ({new_email}) with username: {new_username}")
 
@@ -372,7 +374,7 @@ def main():
              E=cursor.fetchone()[0]
              for x in range(E):
                  st.button("ticket"+str(x), key=x)
-                    
+             c.close()
         
             
 
@@ -386,7 +388,7 @@ def main():
              E=cursor.fetchone()[0]
              for x in range(E):
                  st.button("ticket"+str(x), key=x)
-    
+             c.close()
 
     name, authentication_status, username = _authenticator.login('Login','main')
 
@@ -413,8 +415,8 @@ def main():
 
 if __name__ == '__main__':  
 
-#     pythoncom.CoInitialize()
+    #pythoncom.CoInitialize()
     main()
     
-#     outlook = win32com.client.DispatchWithEvents("Outlook.Application", Handler_Class)
-#     pythoncom.PumpMessages()       
+    #outlook = win32com.client.DispatchWithEvents("Outlook.Application", Handler_Class)
+    #pythoncom.PumpMessages()       
