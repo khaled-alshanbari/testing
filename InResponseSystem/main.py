@@ -48,6 +48,7 @@ def run_alert():
 
     # Display the alert message
     #display_alert()
+    pass
 
     
     
@@ -81,13 +82,12 @@ class Handler_Class(object):
 
         
                     c = sqlcon.create_conn()
-                    if c.is_connected():
-                      
-                      sqlQ = "INSERT INTO `tickets`(`classid`,`Flag`,`start_time`,`end_time` ) VALUES (%s,%s,%s)" 
-                      values = ("1","1", "1", "3")
-                      cursor = c.cursor()
-                      cursor.execute(sqlQ, values)
-                      c.commit()
+                    if c.is_connected():  
+                        sqlQ = "INSERT INTO `tickets`(`classid`,`Flag`,`start_time`,`end_time` ) VALUES (%s,%s,%s)" 
+                        values = ("1","1", "1", "3")
+                        cursor = c.cursor()
+                        cursor.execute(sqlQ, values)
+                        c.commit()
 
                 if prediction == [2]:
                     alert_process = mp.Process(target=run_alert)
