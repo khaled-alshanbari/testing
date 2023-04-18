@@ -11,8 +11,8 @@ import utils.authenticate as stauth
 import DBconn as sqlcon
 import pandas as pd
 import hashlib  
-import win32com.client
-import pythoncom
+#import win32com.client
+#import pythoncom
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 import pickle
