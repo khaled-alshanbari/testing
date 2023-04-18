@@ -413,8 +413,8 @@ def main():
 
 if __name__ == '__main__':  
 
-    pythoncom.CoInitialize()
+#     pythoncom.CoInitialize()
     main()
     
-    outlook = win32com.client.DispatchWithEvents("Outlook.Application", Handler_Class)
-    pythoncom.PumpMessages()       
+#     outlook = win32com.client.DispatchWithEvents("Outlook.Application", Handler_Class)
+#     pythoncom.PumpMessages()       
