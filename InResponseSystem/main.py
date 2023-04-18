@@ -134,6 +134,7 @@ def main():
     names = sqlcon.names
     passwords = sqlcon.passwords
     hashed_passwords = stauth.Hasher(passwords).generate()
+    st.info(f'{usernames}')
     c.close()
 
 
