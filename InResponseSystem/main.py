@@ -32,8 +32,8 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-loaded=pickle.load(open("model.sav", "rb"))
-loaded2=pickle.load(open("tfidf.sav", "rb"))
+loaded=pickle.load(open("/app/testing/InResponseSystem/model.sav", "rb"))
+loaded2=pickle.load(open("/app/testing/InResponseSystem/tfidf.sav", "rb"))
 
 def click(x,counter):
                 c = sqlcon.create_conn()
