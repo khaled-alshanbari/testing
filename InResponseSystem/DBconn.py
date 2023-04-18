@@ -6,6 +6,13 @@ import streamlit
 from mysql.connector import Error
 import pandas as pd
 
+usernames = []
+names = []
+passwords = []
+global fetchUsers 
+global connection_object 
+connection_object =None
+fetchUsers = []
 
 def create_conn(host_name='sql7.freemysqlhosting.net', user_name='sql7613171', user_password='Z7PbeZZAbW', db_name='sql7613171'):
     connection = None
