@@ -129,7 +129,7 @@ global c
 
 def main():
     c= sqlcon.create_conn()
-    sqlcon.call_users(c)
+    sqlcon.usernames, sqlcon.names, sqlcon.passwords=sqlcon.call_users(c)
     usernames = sqlcon.usernames
     names = sqlcon.names
     passwords = sqlcon.passwords
