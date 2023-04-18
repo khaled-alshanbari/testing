@@ -18,7 +18,7 @@ import numpy as np
 import pickle
 import re
 #from dill import dumps, loads
-import tkinter as tk
+#import tkinter as tk
 import tkinter.messagebox as messagebox
 import multiprocessing as mp
 import time
