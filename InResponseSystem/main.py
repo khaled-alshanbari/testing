@@ -17,7 +17,7 @@ import numpy as np
 #from sklearn.feature_extraction.text import TfidfVectorizer
 import pickle
 import re
-from dill import dumps, loads
+#from dill import dumps, loads
 import tkinter as tk
 import tkinter.messagebox as messagebox
 import multiprocessing as mp
