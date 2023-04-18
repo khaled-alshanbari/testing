@@ -19,7 +19,7 @@ import pickle
 import re
 #from dill import dumps, loads
 #import tkinter as tk
-import tkinter.messagebox as messagebox
+#import tkinter.messagebox as messagebox
 import multiprocessing as mp
 import time
 
@@ -40,14 +40,14 @@ def click(x,counter):
                 cursor7 = c.cursor()
                 cursor7.execute('UPDATE tickets SET v'+str(counter-1)+' = 1 WHERE ticketid = '+str(x)+';')
                 c.commit()  
-def display_alert():
-    # Show the alert message
-    messagebox.showwarning("In-Response", "New Incident Detected!", Parent=None)
+# def display_alert():
+#     # Show the alert message
+#     messagebox.showwarning("In-Response", "New Incident Detected!", Parent=None)
 
 def run_alert():
 
     # Display the alert message
-    display_alert()
+    #display_alert()
 
 
 def cleanEmails(emails):
